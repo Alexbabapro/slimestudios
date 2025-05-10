@@ -2,198 +2,252 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <title>Slime Studios</title>
-  <!-- Favicon -->
   <link rel="icon" href="https://mutluresim.com/images/2025/05/09/1cFgQx.png">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    :root {
+      --bg-day: #e0ffe0;
+      --bg-night: #1a1a1a;
+      --fg-day: #333;
+      --fg-night: #ccc;
+      --cont-day: #fff;
+      --cont-night: #333;
+      --primary: #4CAF50;
+      --primary-dark: #45a049;
+    }
+    * { box-sizing: border-box; margin:0; padding:0; }
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0; padding: 0;
-      background-color: #e0ffe0;
-      color: #333;
+      font-family: sans-serif;
+      background: var(--bg-day);
+      color: var(--fg-day);
+      cursor: url('https://mutluresim.com/images/2025/05/10/1coJ5i.png') 4 4, auto;
+      transition: background .3s, color .3s;
+      overflow-x: hidden;
     }
+    body.night { background: var(--bg-night); color: var(--fg-night); }
+    body.minecraft { font-family: 'Press Start 2P', monospace; }
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #4CAF50;
-      color: white;
-      padding: 1rem 2rem;
-    }
-    .slime-logo {
-      width: 80px;
-      height: auto;
-      border-radius: 15%;
-      animation: bounce 2s infinite;
-      cursor: pointer;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    header h1 {
-      font-size: 2.5rem;
-      margin: 0 1rem;
-    }
-    .container {
-      max-width: 800px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: #fff;
-      border-radius: 10px;
+      display: flex; justify-content: space-between; align-items: center;
+      background: var(--primary); color: #fff; padding: 1rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    .link-container {
-      text-align: center;
-      margin-top: 1.5rem;
+    .slime-logo {
+      width: 80px; height: auto; border-radius: 15%;
+      animation: bounce 2s infinite; cursor: pointer;
     }
+    @keyframes bounce {0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+    header h1 { font-size: 1.5rem; }
+    @media(min-width:600px){ header h1{ font-size:2.5rem; } }
+
+    .container {
+      width: 90%; max-width: 800px; margin: 2rem auto; padding: 1rem;
+      background: var(--cont-day); border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center; position: relative; overflow: hidden;
+      transition: background .3s, color .3s;
+    }
+    body.night .container { background: var(--cont-night); }
+    .container p{ font-size:1rem; margin-bottom:1rem; }
+    @media(min-width:600px){ .container p{ font-size:1.2rem; } }
+
     .link-container a {
-      display: inline-block;
-      margin: .5rem 1rem;
-      padding: .75rem 1.5rem;
-      background-color: #4CAF50;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: background-color .3s;
+      display:inline-block; margin:.3rem .5rem; padding:.5rem 1rem;
+      background: var(--primary); color:#fff; text-decoration:none;
+      border-radius:8px; transition: background .3s; cursor:pointer;
+      font-size:0.8rem;
     }
-    .link-container a:hover { background-color: #45a049; }
+    @media(min-width:600px){ .link-container a{ padding:.75rem 1.5rem; font-size:1rem; } }
+    .link-container a:hover { background: var(--primary-dark); }
 
-    /* Müzik audio etiketini gizle but çalan kod */
-    audio { display: none; }
+    audio { display:none; }
 
-    .contact-form {
-      margin-top: 2rem;
+    .contact-form{ text-align:left; margin-top:1.5rem;}
+    .contact-form h2{ font-size:1rem; color: var(--primary); margin-bottom:.5rem;}
+    @media(min-width:600px){ .contact-form h2{font-size:1.5rem;} }
+    .contact-form label{ display:block; font-weight:bold; margin-bottom:.3rem; font-size:0.8rem;}
+    @media(min-width:600px){ .contact-form label{font-size:1rem;} }
+    .contact-form input, .contact-form textarea {
+      width:100%; padding:.5rem; margin-bottom:.8rem;
+      border:1px solid #ccc; border-radius:6px; font-size:0.8rem;
+      background:#fafafa; transition: background .3s;
     }
-    .contact-form h2 {
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-      color: #4CAF50;
+    @media(min-width:600px){ .contact-form input, .contact-form textarea{padding:.75rem; font-size:1rem;} }
+    body.night .contact-form input, body.night .contact-form textarea {
+      background:#444; color:#eee; border:1px solid #666;
     }
-    .contact-form label {
-      display: block;
-      margin-bottom: .3rem;
-      font-weight: bold;
+
+    .button-container { display:flex; gap:.3rem; margin-bottom:1rem; }
+    .button-container button, #sendBtn {
+      flex:1; padding:.5rem; background: var(--primary); color:#fff;
+      border:none; border-radius:6px; font-size:0.8rem;
+      cursor:pointer; transition: background .3s;
     }
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      padding: .75rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
+    @media(min-width:600px){ .button-container button, #sendBtn{padding:.75rem; font-size:1.1rem;} }
+    .button-container button:hover, #sendBtn:hover { background: var(--primary-dark); }
+    #sendBtn { width:100%; }
+
+    /* Modern Switch */
+    .switch { position: relative; display:inline-block; width:40px; height:20px; margin-right:.5rem; }
+    .switch input { opacity:0; width:0; height:0; }
+    .slider {
+      position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0;
+      background:#ccc; transition:.3s; border-radius:20px;
     }
-    .contact-form button {
-      width: 100%;
-      padding: .75rem;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 1.1rem;
+    .slider:before {
+      position:absolute; content:""; height:16px; width:16px;
+      left:2px; bottom:2px; background:white; transition:.3s; border-radius:50%;
+    }
+    input:checked + .slider { background: var(--primary); }
+    input:checked + .slider:before { transform: translateX(20px); }
+
+    /* Settings Icon & Menu */
+    #settingsBtn {
+      position:fixed; top:4rem; right:1rem;
+      background: var(--primary); color:#fff; border:none;
+      padding:.5rem; border-radius:8px; font-size:1.2rem;
+      cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:100;
+      transition: background .3s;
+    }
+    #settingsBtn:hover { background: var(--primary-dark); }
+    #sideMenu {
+      position:fixed; top:0; right:-300px; width:260px; height:100%;
+      background:rgba(0,0,0,0.9); color:#fff; padding:1rem;
+      box-shadow:-4px 0 8px rgba(0,0,0,0.3); transition:right .3s; z-index:99;
+      font-size:0.9rem;
+    }
+    #sideMenu.open { right:0; }
+    #sideMenu .closeBtn { font-size:1.2rem; cursor:pointer; margin-bottom:1rem; }
+    #sideMenu h3 { margin-top:0; font-family:sans-serif; font-size:1.1rem; }
+    #sideMenu label { display:flex; align-items:center; margin:1rem 0; font-family:sans-serif; }
+    #sideMenu label span { font-size:0.9rem; }
+
+    /* Rain Effect */
+    .rain { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; }
+    .rain .drop {
+      position:absolute; top:-30px; width:1px;
+      height:10px;
+      background:rgba(76,175,80,0.2);
+      transform: rotate(var(--angle));
+      filter: blur(1px);
+      animation: fall linear infinite;
+    }
+    @keyframes fall { to { transform: translateY(110vh) rotate(var(--angle)); } }
+
+    /* Secret Game Trigger */
+        /* Secret Game Trigger */
+    #gameTrigger {
+      position: absolute;
+      left: 750px; /* soldan 50px içeride */
+      top: 40%;
+      width: 60px;
+      height: 60px;
       cursor: pointer;
-      transition: background-color .3s;
+      z-index: 10;
     }
-    .contact-form button:hover { background-color: #45a049; }
+    /* Game Overlay */
+    #gameOverlay {
+      display:none; /* başlangıçta gizli */
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.8); z-index:200;
+      justify-content:center; align-items:center; flex-direction:column;
+      color:#fff; font-family:sans-serif;
+    }
+    #gameCanvas {
+      background:#000; border:2px solid var(--primary);
+    }
+    #scoreBoard { margin-top:1rem; font-size:1rem; }
   </style>
 </head>
 <body>
+
   <header>
-    <img class="slime-logo" id="slimeImgLeft" src="https://mutluresim.com/images/2025/05/09/1cFgQx.png" alt="Slime Studios Logosu">
+    <img id="slimeImgLeft" class="slime-logo" src="https://mutluresim.com/images/2025/05/09/1cFgQx.png" alt="Logo">
     <h1>Slime Studios</h1>
-    <img class="slime-logo" id="slimeImgRight" src="https://mutluresim.com/images/2025/05/09/1cFgQx.png" alt="Slime Studios Logosu">
+    <img id="slimeImgRight" class="slime-logo" src="https://mutluresim.com/images/2025/05/09/1cFgQx.png" alt="Logo">
   </header>
 
+  <button id="settingsBtn">⚙️</button>
+  <div id="sideMenu">
+    <div class="closeBtn">✖️</div>
+    <h3>Ayarlar</h3>
+    <label><div class="switch"><input type="checkbox" id="rainToggle"><span class="slider"></span></div><span>Yağmur Efekti</span></label>
+    <label><div class="switch"><input type="checkbox" id="nightToggle"><span class="slider"></span></div><span>Gece Modu</span></label>
+    <label><div class="switch"><input type="checkbox" id="fontToggle"><span class="slider"></span></div><span>Minecraft Fontu</span></label>
+  </div>
+
   <div class="container">
-    <p style="font-size:1.2rem;">Slime Studios'a hoş geldiniz! Burada harika BoraLo Roleplay deneyimleri sizi bekliyor!</p>
+    <img id="gameTrigger" src="https://mutluresim.com/images/2025/05/10/1coW9M.png" alt="Minecraft Head">
+    <div class="rain" id="rain" style="display:none;"></div>
+    <p>Slime Studios'a hoş geldiniz! Burada harika BoraLo Roleplay deneyimleri sizi bekliyor!</p>
     <div class="link-container">
       <a href="https://discord.gg/slimestudios" target="_blank">Discord Sunucumuza Katıl</a>
       <a href="https://youtube.com/@slimestudioss?si=DQfTsldv7QsizBKC" target="_blank">YouTube Kanalımıza Göz At</a>
     </div>
-
-    <!-- GİZLİ AUDIO ETİKETİ (sayfada görünmez) -->
     <audio id="ratAudio" src="https://www.myinstants.com/media/sounds/rat-dance-music.mp3" preload="auto"></audio>
-
     <div class="contact-form">
       <h2>İletişim</h2>
-      <label for="name">Adınız (Zorunlu):</label>
-      <input type="text" id="name" placeholder="Adınızı girin" required>
-
-      <label for="discord">Discord Kullanıcı Adınız (Zorunlu):</label>
-      <input type="text" id="discord" placeholder="Discord#1234 formatında" required>
-
-      <label for="message">Mesajınız (Zorunlu):</label>
-      <textarea id="message" rows="5" placeholder="Mesajınızı yazın" required></textarea>
-
-      <button id="sendBtn">Gönder</button>
+      <label for="name">Adınız:</label><input id="name" type="text" placeholder="Adınızı girin" required>
+      <label for="discord">Discord Kullanıcı Adınız:</label><input id="discord" type="text" placeholder="Discord#1234" required>
+      <label for="message">Mesajınız:</label><textarea id="message" rows="4" placeholder="Mesajınızı yazın" required></textarea>
+      <div class="button-container">
+        <button id="capitalizeBtn">BÜYÜK HARF</button>
+        <button id="punctuateBtn">NOKTALAMA</button>
+      </div>
+      <button id="sendBtn">GÖNDER</button>
     </div>
   </div>
 
-  <script>
-    // Slime logolarına tıklayınca ses mutlaka çalsın:
-    function playRatDance() {
-      const audio = document.getElementById('ratAudio');
-      audio.currentTime = 0;
-      audio.play().catch(err => console.warn('Oynatma hatası:', err));
-    }
-    document.getElementById('slimeImgLeft').addEventListener('click', playRatDance);
-    document.getElementById('slimeImgRight').addEventListener('click', playRatDance);
+    <div id="gameOverlay">
 
-    // Gönder butonu: küfür filtresi + webhook
-    document.getElementById('sendBtn').addEventListener('click', async () => {
-      const name = document.getElementById('name').value.trim();
-      const discord = document.getElementById('discord').value.trim();
-      const message = document.getElementById('message').value.trim();
-      if (!name || !discord || !message) {
-        alert('Lütfen tüm zorunlu alanları doldurun.');
-        return;
-      }
-      const normalized = message.normalize('NFKC').toLocaleLowerCase('tr-TR');
-      const forbidden = [
-        'oç','orospu','salak','aptal','şerefsiz','lanet','piç','yavşak',
-        'amk','aq','amq','amö','oede','ananı','karı','küfür','gerizekalı',
-        'mal','dangalak','beyinsiz','bok','sik','pezevenk','kaltak','çüş',
-        'göt','götveren','yarrak','daşşak','puşt','ibne','ezik'
-      ];
-      const regex = new RegExp(`\\b(${forbidden.join('|')})\\b`,'iu');
-      if (regex.test(normalized)) {
-        alert('Mesajınızda küfürlü veya uygunsuz ifadeler bulunamaz.');
-        return;
-      }
-      const webhookURL = 'https://discord.com/api/webhooks/1370412676823388160/bKl3prfCy-Pj3LrKciv2DUZr0DgO4-dFBfwaMExObFfmNJQiysVctghb_QrXkebuJSVC';
-      const payload = {
-        username: 'Slime Studios Web Form',
-        embeds: [{
-          title: 'İletişim Mesajı By:Alex',
-          color: 0x00FF00,
-          fields: [
-            { name: 'Gönderen', value: name, inline: true },
-            { name: 'Discord', value: discord, inline: true },
-            { name: 'Mesaj', value: message }
-          ],
-          timestamp: new Date().toISOString()
-        }]
-      };
-      try {
-        const res = await fetch(webhookURL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (res.ok) {
-          alert('Mesajınız başarıyla gönderildi!');
-          document.getElementById('name').value = '';
-          document.getElementById('discord').value = '';
-          document.getElementById('message').value = '';
-        } else {
-          alert('Mesaj gönderilirken bir hata oluştu.');
-        }
-      } catch {
-        alert('Mesaj gönderilemedi. Lütfen tekrar deneyin.');
-      }
-    });
+    <canvas id="gameCanvas" width="300" height="300"></canvas>
+    <div id="scoreBoard">Skor: <span id="score">0</span></div>
+  </div>
+
+  <script>
+    // Menü
+    const settingsBtn = document.getElementById('settingsBtn'), sideMenu    = document.getElementById('sideMenu'), closeBtn    = sideMenu.querySelector('.closeBtn');
+    settingsBtn.onclick = ()=> sideMenu.classList.add('open'); closeBtn.onclick    = ()=> sideMenu.classList.remove('open');
+
+    // Yağmur
+    const rainEl = document.getElementById('rain'); function createRain(){ rainEl.innerHTML = ''; for(let i=0;i<100;i++){ const d=document.createElement('div'); d.className='drop'; d.style.left = Math.random()*100+'vw'; d.style.setProperty('--angle',(-10+Math.random()*20)+'deg'); d.style.height = (10+Math.random()*20)+'px'; d.style.animationDuration=(0.8+Math.random()*1.2)+'s'; rainEl.appendChild(d);} }
+    document.getElementById('rainToggle').onchange = e=>{ rainEl.style.display = e.target.checked ? 'block':'none'; if(e.target.checked) createRain(); };
+
+    // Gece/Font
+    document.getElementById('nightToggle').onchange = e=> document.body.classList.toggle('night', e.target.checked);
+    document.getElementById('fontToggle').onchange = e=> document.body.classList.toggle('minecraft', e.target.checked);
+
+    // Logo sesi
+    const playRat = ()=>{ const a=document.getElementById('ratAudio'); a.currentTime=0; a.play().catch(()=>{}); };
+    document.getElementById('slimeImgLeft').onclick = playRat; document.getElementById('slimeImgRight').onclick= playRat;
+
+    // Büyük harf & noktalama
+    document.getElementById('capitalizeBtn').onclick = ()=>{ const m=document.getElementById('message'); m.value=m.value.toUpperCase(); };
+    document.getElementById('punctuateBtn').onclick = ()=>{ const m=document.getElementById('message'), t=m.value.trim(); if(t && !/[.!?]$/.test(t)) m.value=t+'.'; };
+
+    // Webhook form
+    document.getElementById('sendBtn').onclick = async ()=>{
+      const name=document.getElementById('name').value.trim(), discord=document.getElementById('discord').value.trim(), message=document.getElementById('message').value.trim();
+      if(!name||!discord||!message) return alert('Lütfen tüm alanları doldurun.');
+      const bad=['oç','orospu','salak','aptal','şerefsiz','lanet','piç','yavşak','amk','aq','amq','amö','oede','ananı','karı','küfür','gerizekalı','mal','dangalak','beyinsiz','bok','sik','pezevenk','kaltak','çüş','göt','götveren','yarrak','daşşak','puşt','ibne','ezik'];
+      if(new RegExp(`\\b(${bad.join('|')})\\b`,'iu').test(message.normalize('NFKC').toLowerCase())) return alert('Uygunsuz ifade tespit edildi!');
+      const webhookURL='https://discord.com/api/webhooks/1370412676823388160/bKl3prfCy-Pj3LrKciv2DUZr0DgO4-dFBfwaMExObFfmNJQiysVctghb_QrXkebuJSVC';
+      const payload={username:'Slime Studios',embeds:[{title:'Mesaj',color:0x00FF00,fields:[{name:'Ad',value:name,inline:true},{name:'Discord',value:discord,inline:true},{name:'Mesaj',value:message}],timestamp:new Date().toISOString()}]};
+      try{ const res=await fetch(webhookURL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}); alert(res.ok?'✅ Mesaj gönderildi!':'❌ Hata oluştu.'); } catch{ alert('❌ Gönderilemedi.'); }
+    };
+
+    // Gizli oyun
+    const overlay=document.getElementById('gameOverlay'), canvas=document.getElementById('gameCanvas'), ctx=canvas.getContext('2d'), trigger=document.getElementById('gameTrigger'), scoreEl=document.getElementById('score');
+    let playerX=140, playerY=260, left=false, right=false, obstacles=[], gameInt, spawnInt, score=0, speed=4;
+
+    function startGame(){ overlay.style.display='flex'; playerX=140; obstacles=[]; score=0; speed=4; scoreEl.textContent=score; document.addEventListener('keydown',kd); document.addEventListener('keyup',ku); gameInt=setInterval(updateGame,16); spawnInt=setInterval(spawnObstacle,1000); }
+    function endGame(){ clearInterval(gameInt); clearInterval(spawnInt); document.removeEventListener('keydown',kd); document.removeEventListener('keyup',ku); overlay.style.display='none'; alert('Oyun bitti! Skorunuz: '+score); }
+    function kd(e){ if(e.key==='ArrowLeft') left=true; if(e.key==='ArrowRight') right=true; }
+    function ku(e){ if(e.key==='ArrowLeft') left=false; if(e.key==='ArrowRight') right=false; }
+    function spawnObstacle(){ obstacles.push({x:Math.random()*280,y:-20,size:20}); clearInterval(spawnInt); spawnInt=setInterval(spawnObstacle,Math.max(300,1000-score*10)); }
+    function updateGame(){ ctx.clearRect(0,0,300,300); if(left) playerX-=4; if(right) playerX+=4; playerX=Math.max(0,Math.min(280,playerX)); ctx.fillStyle='#4CAF50'; ctx.fillRect(playerX,playerY,20,20); obstacles.forEach((o,i)=>{ o.y+=speed; ctx.fillStyle='#FF3333'; ctx.fillRect(o.x,o.y,o.size,o.size); if(o.y+o.size>playerY && o.x<playerX+20 && o.x+o.size>playerX){ endGame(); return; } if(o.y>300){ obstacles.splice(i,1); score++; speed+=0.05; scoreEl.textContent=score; } }); }
+    trigger.onclick=startGame;
   </script>
 </body>
 </html>
