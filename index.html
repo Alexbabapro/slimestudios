@@ -1,253 +1,321 @@
 <!DOCTYPE html>
-<html lang="tr">
+<!-- Created By traagent -->
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <title>Slime Studios</title>
-  <link rel="icon" href="https://mutluresim.com/images/2025/05/09/1cFgQx.png">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-    :root {
-      --bg-day: #e0ffe0;
-      --bg-night: #1a1a1a;
-      --fg-day: #333;
-      --fg-night: #ccc;
-      --cont-day: #fff;
-      --cont-night: #333;
-      --primary: #4CAF50;
-      --primary-dark: #45a049;
-    }
-    * { box-sizing: border-box; margin:0; padding:0; }
-    body {
-      font-family: sans-serif;
-      background: var(--bg-day);
-      color: var(--fg-day);
-      cursor: url('https://mutluresim.com/images/2025/05/10/1coJ5i.png') 4 4, auto;
-      transition: background .3s, color .3s;
-      overflow-x: hidden;
-    }
-    body.night { background: var(--bg-night); color: var(--fg-night); }
-    body.minecraft { font-family: 'Press Start 2P', monospace; }
-    header {
-      display: flex; justify-content: space-between; align-items: center;
-      background: var(--primary); color: #fff; padding: 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .slime-logo {
-      width: 80px; height: auto; border-radius: 15%;
-      animation: bounce 2s infinite; cursor: pointer;
-    }
-    @keyframes bounce {0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-    header h1 { font-size: 1.5rem; }
-    @media(min-width:600px){ header h1{ font-size:2.5rem; } }
-
-    .container {
-      width: 90%; max-width: 800px; margin: 2rem auto; padding: 1rem;
-      background: var(--cont-day); border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      text-align: center; position: relative; overflow: hidden;
-      transition: background .3s, color .3s;
-    }
-    body.night .container { background: var(--cont-night); }
-    .container p{ font-size:1rem; margin-bottom:1rem; }
-    @media(min-width:600px){ .container p{ font-size:1.2rem; } }
-
-    .link-container a {
-      display:inline-block; margin:.3rem .5rem; padding:.5rem 1rem;
-      background: var(--primary); color:#fff; text-decoration:none;
-      border-radius:8px; transition: background .3s; cursor:pointer;
-      font-size:0.8rem;
-    }
-    @media(min-width:600px){ .link-container a{ padding:.75rem 1.5rem; font-size:1rem; } }
-    .link-container a:hover { background: var(--primary-dark); }
-
-    audio { display:none; }
-
-    .contact-form{ text-align:left; margin-top:1.5rem;}
-    .contact-form h2{ font-size:1rem; color: var(--primary); margin-bottom:.5rem;}
-    @media(min-width:600px){ .contact-form h2{font-size:1.5rem;} }
-    .contact-form label{ display:block; font-weight:bold; margin-bottom:.3rem; font-size:0.8rem;}
-    @media(min-width:600px){ .contact-form label{font-size:1rem;} }
-    .contact-form input, .contact-form textarea {
-      width:100%; padding:.5rem; margin-bottom:.8rem;
-      border:1px solid #ccc; border-radius:6px; font-size:0.8rem;
-      background:#fafafa; transition: background .3s;
-    }
-    @media(min-width:600px){ .contact-form input, .contact-form textarea{padding:.75rem; font-size:1rem;} }
-    body.night .contact-form input, body.night .contact-form textarea {
-      background:#444; color:#eee; border:1px solid #666;
-    }
-
-    .button-container { display:flex; gap:.3rem; margin-bottom:1rem; }
-    .button-container button, #sendBtn {
-      flex:1; padding:.5rem; background: var(--primary); color:#fff;
-      border:none; border-radius:6px; font-size:0.8rem;
-      cursor:pointer; transition: background .3s;
-    }
-    @media(min-width:600px){ .button-container button, #sendBtn{padding:.75rem; font-size:1.1rem;} }
-    .button-container button:hover, #sendBtn:hover { background: var(--primary-dark); }
-    #sendBtn { width:100%; }
-
-    /* Modern Switch */
-    .switch { position: relative; display:inline-block; width:40px; height:20px; margin-right:.5rem; }
-    .switch input { opacity:0; width:0; height:0; }
-    .slider {
-      position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0;
-      background:#ccc; transition:.3s; border-radius:20px;
-    }
-    .slider:before {
-      position:absolute; content:""; height:16px; width:16px;
-      left:2px; bottom:2px; background:white; transition:.3s; border-radius:50%;
-    }
-    input:checked + .slider { background: var(--primary); }
-    input:checked + .slider:before { transform: translateX(20px); }
-
-    /* Settings Icon & Menu */
-    #settingsBtn {
-      position:fixed; top:4rem; right:1rem;
-      background: var(--primary); color:#fff; border:none;
-      padding:.5rem; border-radius:8px; font-size:1.2rem;
-      cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.2); z-index:100;
-      transition: background .3s;
-    }
-    #settingsBtn:hover { background: var(--primary-dark); }
-    #sideMenu {
-      position:fixed; top:0; right:-300px; width:260px; height:100%;
-      background:rgba(0,0,0,0.9); color:#fff; padding:1rem;
-      box-shadow:-4px 0 8px rgba(0,0,0,0.3); transition:right .3s; z-index:99;
-      font-size:0.9rem;
-    }
-    #sideMenu.open { right:0; }
-    #sideMenu .closeBtn { font-size:1.2rem; cursor:pointer; margin-bottom:1rem; }
-    #sideMenu h3 { margin-top:0; font-family:sans-serif; font-size:1.1rem; }
-    #sideMenu label { display:flex; align-items:center; margin:1rem 0; font-family:sans-serif; }
-    #sideMenu label span { font-size:0.9rem; }
-
-    /* Rain Effect */
-    .rain { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; }
-    .rain .drop {
-      position:absolute; top:-30px; width:1px;
-      height:10px;
-      background:rgba(76,175,80,0.2);
-      transform: rotate(var(--angle));
-      filter: blur(1px);
-      animation: fall linear infinite;
-    }
-    @keyframes fall { to { transform: translateY(110vh) rotate(var(--angle)); } }
-
-    /* Secret Game Trigger */
-        /* Secret Game Trigger */
-    #gameTrigger {
-      position: absolute;
-      left: 750px; /* soldan 50px içeride */
-      top: 40%;
-      width: 60px;
-      height: 60px;
-      cursor: pointer;
-      z-index: 10;
-    }
-    /* Game Overlay */
-    #gameOverlay {
-      display:none; /* başlangıçta gizli */
-      position:fixed; top:0; left:0; width:100%; height:100%;
-      background:rgba(0,0,0,0.8); z-index:200;
-      justify-content:center; align-items:center; flex-direction:column;
-      color:#fff; font-family:sans-serif;
-    }
-    #gameCanvas {
-      background:#000; border:2px solid var(--primary);
-    }
-    #scoreBoard { margin-top:1rem; font-size:1rem; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tryc - Discord Bot</title>
+    <link rel="icon" href="Logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
+
 <body>
-
-  <header>
-    <img id="slimeImgLeft" class="slime-logo" src="https://mutluresim.com/images/2025/05/09/1cFgQx.png" alt="Logo">
-    <h1>Slime Studios</h1>
-    <img id="slimeImgRight" class="slime-logo" src="https://mutluresim.com/images/2025/05/09/1cFgQx.png" alt="Logo">
-  </header>
-
-  <button id="settingsBtn">⚙️</button>
-  <div id="sideMenu">
-    <div class="closeBtn">✖️</div>
-    <h3>Ayarlar</h3>
-    <label><div class="switch"><input type="checkbox" id="rainToggle"><span class="slider"></span></div><span>Yağmur Efekti</span></label>
-    <label><div class="switch"><input type="checkbox" id="nightToggle"><span class="slider"></span></div><span>Gece Modu</span></label>
-    <label><div class="switch"><input type="checkbox" id="fontToggle"><span class="slider"></span></div><span>Minecraft Fontu</span></label>
-  </div>
-
-  <div class="container">
-    <img id="gameTrigger" src="https://mutluresim.com/images/2025/05/10/1coW9M.png" alt="Minecraft Head">
-    <div class="rain" id="rain" style="display:none;"></div>
-    <p>Slime Studios'a hoş geldiniz! Burada harika BoraLo Roleplay deneyimleri sizi bekliyor!</p>
-    <div class="link-container">
-      <a href="https://discord.gg/slimestudios" target="_blank">Discord Sunucumuza Katıl</a>
-      <a href="https://youtube.com/@slimestudioss?si=DQfTsldv7QsizBKC" target="_blank">YouTube Kanalımıza Göz At</a>
+    <!-- Yüklenme Ekranı -->
+    <div id="loadingScreen">
+        <div class="loader"></div>
     </div>
-    <audio id="ratAudio" src="https://www.myinstants.com/media/sounds/rat-dance-music.mp3" preload="auto"></audio>
-    <div class="contact-form">
-      <h2>İletişim</h2>
-      <label for="name">Adınız:</label><input id="name" type="text" placeholder="Adınızı girin" required>
-      <label for="discord">Discord Kullanıcı Adınız:</label><input id="discord" type="text" placeholder="Discord#1234" required>
-      <label for="message">Mesajınız:</label><textarea id="message" rows="4" placeholder="Mesajınızı yazın" required></textarea>
-      <div class="button-container">
-        <button id="capitalizeBtn">BÜYÜK HARF</button>
-        <button id="punctuateBtn">NOKTALAMA</button>
-      </div>
-      <button id="sendBtn">GÖNDER</button>
+    <!-- Yüklenme Ekranı end-->
+    <!-- navbar -->
+    <header>
+        <h1 class="logo">Tryc</h1>
+        <nav>
+            <ul class="nav-area top-nav">
+                <li><a href="#top">Ana Sayfa</a></li>
+                <li><a href="#features">Bot Hakkında</a></li>
+                <li><a href="#commands">Komutlar</a></li>
+                <li><a href="#faq">SSS</a></li>
+            </ul>
+        </nav>
+        <a href="https://discord.gg/sn6jAPKyHs" class="btn-area">Sunucuna Ekle</a>
+    </header>
+    <!-- navbar end -->
+    <!-- home -->
+    <div class="wrapper" style="background-color: #121212">
+        <div class="home" id="home">
+            <div class="home-text" style="background-color: #121212">
+                <h1 id="botname">Tryc</h1>
+                <p class="bot-description">Türkçe Discord Botu'mu Ne??? Hem Minecraft Hem Discord Botmu Vay Canına <br>
+                    (Tryc)</p>
+                <a href="https://parsher.xyz"><button class="home-btn">Sunucuna Ekle</button></a>
+                <a href="https://discord.gg/sn6jAPKyHs"><button class="home-btn">Destek Sunucum</button></a>
+            </div>
+            <div class="home-img">
+                <img src="Logo.png"
+                    alt="Home-Image">
+            </div>
+        </div>
     </div>
-  </div>
+    <!-- home end -->
+    <div class="curve">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill-opacity="1" id="faq"
+                d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,250.7C1248,256,1344,288,1392,304L1440,320L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+            </path>
+        </svg>
+    </div>
+    <!-- Video Section Start -->
+    <div class="video-section">
+        <!-- features -->
+    <div class="features">
+        <div class="wrapper reveal">
+            
+            <div class="title">
+                <div class="th1">
+                    <h1 id="features">En İyisini Sunuyoruz</h1>
+                </div>
+                <center>
+                    <div class="thr">
+                        <hr>
+                    </div>
+                </center>
+            </div>
+            <!-- feature start -->
+            <div class="features-grid">
+                <div class="feature feature1">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h4>Moderasyon Komutları</h4>
+                    <p>Discord sunucunuz için en işlevli ve en iyi moderasyon komutlarını sunuyoruz!</p>
 
-    <div id="gameOverlay">
+                </div>
+                <!-- feature end -->
+                <!-- feature start -->
+                <div class="feature feature2">
+                    <i class="fas fa-server"></i>
+                    <h4>7/24 Aktif</h4>
+                    <p>Discord Botumuz profosyonel olarak 24/7 hizmet sağlamaktadır.</p>
 
-    <canvas id="gameCanvas" width="300" height="300"></canvas>
-    <div id="scoreBoard">Skor: <span id="score">0</span></div>
-  </div>
+                </div>
+                <!-- feature end -->
+                <!-- feature start -->
+                <div class="feature feature3">
+                    <i class="fab fa-angellist"></i>
+                    <h4>Kolay Kullanım
+                    </h4>
+                    <p>Basit altyapısı ile kullanıcılarına kolay bir deneyim sunar.</p>
+                </div>
+                <!-- feature end -->
+                
+            </div>
+        </div>
+    </div>
+    <!-- features end -->
+        <div class="wrapper reveal">
+            <div class="video-content">
+                <div class="video-text">
+                    <h1>Videomuzu İzleyin</h1>
+                    <p>Botumuzun tüm özelliklerini ve nasıl kullanıldığını öğrenmek için aşağıdaki videoyu izleyebilirsiniz.</p>
+                    <p>(Yandaki video sadece bir örnektir)</p>
+                </div>
+                <div class="video-container">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/iY1jqjwAMeU?si=oNa0OvFzF6Ng6_fQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Video Section End -->
 
-  <script>
-    // Menü
-    const settingsBtn = document.getElementById('settingsBtn'), sideMenu    = document.getElementById('sideMenu'), closeBtn    = sideMenu.querySelector('.closeBtn');
-    settingsBtn.onclick = ()=> sideMenu.classList.add('open'); closeBtn.onclick    = ()=> sideMenu.classList.remove('open');
+    <!-- commands -->
+    <div class="curved">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill-opacity="1" id="commands"
+                d="M0,224L48,229.3C96,235,192,245,288,218.7C384,192,480,128,576,133.3C672,139,768,213,864,229.3C960,245,1056,203,1152,186.7C1248,171,1344,181,1392,186.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+            </path>
+        </svg>
+    </div>
+    <div class="wrapper reveal" style="background-color: #121212;">
+        <div class="title">
+            <div class="th1">
+                <h1>Komutlar</h1>
+            </div>
+            <center>
+                <div class="thr">
+                    <hr>
+                </div>
+            </center>
+        </div>
+        <!-- Command Category -->
+        <nav>
+            <div class=" categorys">
+                <span class="category active" data-name="all">Hepsi</span>
+                <span class="category" data-name="info">Kişisel</span>
+                <span class="category" data-name="fun">Eğlence</span>
+                <span class="category" data-name="moderator">Moderasyon</span>
+                <span class="category" data-name="premium">Premium</span>
+            </div>
+        </nav>
+        <!-- Commands -->
+        <div class="commands" style="background-color: #121212;">
+            <!-- Command Start -->
+            <div class="command" data-name="fun">
+                <h2>Adam Ol</h2><span>
+                    <div class="cmdinfo">
+                        <p>Bu komut ile profil fotoğrafınızın altına takım elbise eklenmesini sağlayabilirsiniz. </p>
+                    </div>
+                </span>
+            </div>
+            <!-- Command End -->
+            <!-- Command Start -->
+            <div class="command" data-name="moderator">
+                <h2>Kayıt Sistemi</h2><span>
+                    <div class="cmdinfo">
+                        <p>Sunucuya girişlerde üyeler kendileri kayıt olsunlar, İsim yaş ayarlayabilirsiniz.</p>
+                    </div>
+                </span>
+            </div>
+            <!-- Command End -->
+            <!-- Command Start -->
+            <div class="command" data-name="fun">
+                <h2>Kral Ol</h2><span>
+                    <div class="cmdinfo">
+                        <p>Bu komut ile profil fotoğrafınızın kraliyet çerçevesiyle kaplanmasını sağlayabilirsiniz.</p>
+                    </div>
+                </span>
+            </div>
+            <!-- Command End -->
+            <!-- Command Start -->
+            <div class="command" data-name="info">
+                <h2>Avatar</h2><span>
+                    <div class="cmdinfo">
+                        <p>Bu komut ile kendi profil fotoğrafını görebilirsin.</p>
+                    </div>
+                </span>
+            </div>
+            <!-- Command End -->
+            <!-- Command Start -->
+            <div class="command" data-name="premium">
+                <h2>Anti Raid Bot Sistemi</h2><span>
+                    <div class="cmdinfo">
+                        <p>Bu Özellik Premium Sunucular İçindir Anti Raid Bot sistemi, Sunucunuza yabancı bot girdiği zaman o botu otomatik olarak sunucudan atar ve sunucu sahibine bildirim gönderir sunucu sahibi izin verir ise yabancı bot sunucuya girebilir.</p>
+                    </div>
+                </span>
+            </div>
+            <!-- Command End -->
+            <!-- Command Start -->
+            <div class="command" data-name="moderator">
+                <h2>İsim Sistemi</h2><span>
+                    <div class="cmdinfo">
+                        <p>İsim sistemi; ayarladığınız isim taslağına göre tek komut ile isimleri ayarlamanızı sağlar.</p>
+                    </div>
+                </span>
+            </div>
+            <!-- Command End -->
+        </div>
+    </div>
+    <!-- commands end -->
+    <!-- faq -->
+    <div class="faq">
+        <div class="curve">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill-opacity="1" id="faq"
+                    d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,250.7C1248,256,1344,288,1392,304L1440,320L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+                </path>
+            </svg>
+        </div>
+        <div class="wrapper reveal">
+            <main id="questions" role="main">
+                <div class="title">
+                    <div class="th1">
+                        <h1>Sıkça Sorulan Sorular</h1>
+                    </div>
+                    <center>
+                        <div class="thr">
+                            <hr>
+                        </div>
+                    </center>
+                </div>
+                <input type="text" class="live-search-box" placeholder="Sana nasıl yardımcı olabiliriz?" />
+                <!-- question start -->
+                <div class="topic">
+                    <div class="open">
 
-    // Yağmur
-    const rainEl = document.getElementById('rain'); function createRain(){ rainEl.innerHTML = ''; for(let i=0;i<100;i++){ const d=document.createElement('div'); d.className='drop'; d.style.left = Math.random()*100+'vw'; d.style.setProperty('--angle',(-10+Math.random()*20)+'deg'); d.style.height = (10+Math.random()*20)+'px'; d.style.animationDuration=(0.8+Math.random()*1.2)+'s'; rainEl.appendChild(d);} }
-    document.getElementById('rainToggle').onchange = e=>{ rainEl.style.display = e.target.checked ? 'block':'none'; if(e.target.checked) createRain(); };
+                        <h2 class="question">Örnek Soru Metni 1?</h2>
+                        <span class="faq-t"></span>
+                    </div>
+                    <p class="answer">Örnek cevap metni (buraya soruların cevapları girilecek).
+</p>
+                </div>
+                <!-- question end -->
+                <!-- question start -->
+                <div class="topic">
+                    <div class="open">
+                        <h2 class="question">Örnek Soru Metni 2?
+                        </h2><span class="faq-t"></span>
+                    </div>
+                    <p class="answer">Örnek cevap metni (buraya soruların cevapları girilecek).
+                    </p>
+                </div>
+                <!-- question end -->
+                <!-- question start -->
+                <div class="topic">
+                    <div class="open">
+                        <h2 class="question">Örnek Soru Metni 3?
+                        </h2><span class="faq-t"></span>
+                    </div>
+                    <p class="answer">Örnek cevap metni (buraya soruların cevapları girilecek).
+                    </p>
+                </div>
+                <!-- question end -->
+                <!-- question start -->
+                <div class="topic">
+                    <div class="open">
+                        <h2 class="question">Örnek Soru Metni 4?
+                        </h2><span class="faq-t"></span>
+                    </div>
+                    <p class="answer">Örnek cevap metni (buraya soruların cevapları girilecek).</p>
+                </div>
+                <!-- question end -->
+                <!-- question start -->
+                <div class="topic">
+                    <div class="open">
+                        <h2 class="question">Örnek Soru Metni5?
+                        </h2><span class="faq-t"></span>
+                    </div>
+                    <p class="answer">Örnek cevap metni (buraya soruların cevapları girilecek).</p>
+                </div>
+                <!-- question end -->
+            </main>
+        </div>
+        <div class="curve">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill-opacity="1"
+                    d="M0,32L48,80C96,128,192,224,288,218.7C384,213,480,107,576,96C672,85,768,171,864,176C960,181,1056,107,1152,64C1248,21,1344,11,1392,5.3L1440,0L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+                </path>
+            </svg>
+        </div>
+    </div>
+    <!-- faq end -->
 
-    // Gece/Font
-    document.getElementById('nightToggle').onchange = e=> document.body.classList.toggle('night', e.target.checked);
-    document.getElementById('fontToggle').onchange = e=> document.body.classList.toggle('minecraft', e.target.checked);
+    <!-- footer -->
+    <footer>
 
-    // Logo sesi
-    const playRat = ()=>{ const a=document.getElementById('ratAudio'); a.currentTime=0; a.play().catch(()=>{}); };
-    document.getElementById('slimeImgLeft').onclick = playRat; document.getElementById('slimeImgRight').onclick= playRat;
+        <div class="wrapper">
+            <div class="foot" style="background-color: #121212;">
+                <h1 style="background-color: #121212;">Botunuzun adı <h1>
+                <nav>
+                    <ul class="nav-area bottom-nav" style="background-color: #121212;">
+                        <li><a href="#top">Ana Sayfa</a></li>
+                        <li><a href="#features">Bot Hakkında</a></li>
+                        <li><a href="#commands">Komutlar</a></li>
+                        <li><a href="#faq">SSS</a></li>
+                    </ul>
+                </nav>
+                <h4>Bot <a href="https://discord.gg/sn6jAPKyHs" style="color : rgb(220, 223, 25) ; font-size: 1rem; letter-spacing: 0px;">Tryc</a> & Türkiye Hosting</h4>
+        </div>
+    </footer>
 
-    // Büyük harf & noktalama
-    document.getElementById('capitalizeBtn').onclick = ()=>{ const m=document.getElementById('message'); m.value=m.value.toUpperCase(); };
-    document.getElementById('punctuateBtn').onclick = ()=>{ const m=document.getElementById('message'), t=m.value.trim(); if(t && !/[.!?]$/.test(t)) m.value=t+'.'; };
+    <!-- footer end -->
+    <!--Yukarı çık butonu-->
 
-    // Webhook form
-    document.getElementById('sendBtn').onclick = async ()=>{
-      const name=document.getElementById('name').value.trim(), discord=document.getElementById('discord').value.trim(), message=document.getElementById('message').value.trim();
-      if(!name||!discord||!message) return alert('Lütfen tüm alanları doldurun.');
-      const bad=['oç','orospu','salak','aptal','şerefsiz','lanet','piç','yavşak','amk','aq','amq','amö','oede','ananı','karı','küfür','gerizekalı','mal','dangalak','beyinsiz','bok','sik','pezevenk','kaltak','çüş','göt','götveren','yarrak','daşşak','puşt','ibne','ezik'];
-      if(new RegExp(`\\b(${bad.join('|')})\\b`,'iu').test(message.normalize('NFKC').toLowerCase())) return alert('Uygunsuz ifade tespit edildi!');
-      const webhookURL='https://discord.com/api/webhooks/1370412676823388160/bKl3prfCy-Pj3LrKciv2DUZr0DgO4-dFBfwaMExObFfmNJQiysVctghb_QrXkebuJSVC';
-      const payload={username:'Slime Studios',embeds:[{title:'Mesaj',color:0x00FF00,fields:[{name:'Ad',value:name,inline:true},{name:'Discord',value:discord,inline:true},{name:'Mesaj',value:message}],timestamp:new Date().toISOString()}]};
-      try{ const res=await fetch(webhookURL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}); alert(res.ok?'✅ Mesaj gönderildi!':'❌ Hata oluştu.'); } catch{ alert('❌ Gönderilemedi.'); }
-    };
+    <button id="scrollTopBtn" title="Yukarı Çık">↑</button>
+    <script src="upToButton.js"></script>
+    <!--Yukarı çık butonu bitiş-->
 
-    // Gizli oyun
-    const overlay=document.getElementById('gameOverlay'), canvas=document.getElementById('gameCanvas'), ctx=canvas.getContext('2d'), trigger=document.getElementById('gameTrigger'), scoreEl=document.getElementById('score');
-    let playerX=140, playerY=260, left=false, right=false, obstacles=[], gameInt, spawnInt, score=0, speed=4;
-
-    function startGame(){ overlay.style.display='flex'; playerX=140; obstacles=[]; score=0; speed=4; scoreEl.textContent=score; document.addEventListener('keydown',kd); document.addEventListener('keyup',ku); gameInt=setInterval(updateGame,16); spawnInt=setInterval(spawnObstacle,1000); }
-    function endGame(){ clearInterval(gameInt); clearInterval(spawnInt); document.removeEventListener('keydown',kd); document.removeEventListener('keyup',ku); overlay.style.display='none'; alert('Oyun bitti! Skorunuz: '+score); }
-    function kd(e){ if(e.key==='ArrowLeft') left=true; if(e.key==='ArrowRight') right=true; }
-    function ku(e){ if(e.key==='ArrowLeft') left=false; if(e.key==='ArrowRight') right=false; }
-    function spawnObstacle(){ obstacles.push({x:Math.random()*280,y:-20,size:20}); clearInterval(spawnInt); spawnInt=setInterval(spawnObstacle,Math.max(300,1000-score*10)); }
-    function updateGame(){ ctx.clearRect(0,0,300,300); if(left) playerX-=4; if(right) playerX+=4; playerX=Math.max(0,Math.min(280,playerX)); ctx.fillStyle='#4CAF50'; ctx.fillRect(playerX,playerY,20,20); obstacles.forEach((o,i)=>{ o.y+=speed; ctx.fillStyle='#FF3333'; ctx.fillRect(o.x,o.y,o.size,o.size); if(o.y+o.size>playerY && o.x<playerX+20 && o.x+o.size>playerX){ endGame(); return; } if(o.y>300){ obstacles.splice(i,1); score++; speed+=0.05; scoreEl.textContent=score; } }); }
-    trigger.onclick=startGame;
-  </script>
+    <script src="main.js"></script>
+    <script src="commands.js"></script>
+    <script src="https://code.iconify.design/1/1.0.4/iconify.min.js">   </script>
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
 </body>
 </html>
